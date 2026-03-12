@@ -64,7 +64,10 @@ This separation allows statistical monitoring methods to identify regime transit
 # Monitoring Framework
 
 The monitoring pipeline follows four stages:
-Simulation → Feature Engineering → Detection → Evaluation
+
+**Monitoring Pipeline**
+
+Simulation → Feature Extraction → Fault Detection → Evaluation
 
 ### Multivariate Regime Signal
 
@@ -80,11 +83,13 @@ The **BAFO** framework operates as a probabilistic state observer that integrate
 
 Conceptually:
 
+```
 Multivariate Evidence
-↓
-Bayesian Update
-↓
+        ↓
+    Bayesian Update
+        ↓
 Health State Observer
+```
 
 This structure allows the observer to react to regime changes while maintaining robustness to impulsive disturbances and transient noise.
 
@@ -159,22 +164,25 @@ The proposed monitoring framework is applicable to:
 ---
 
 # Repository Structure
+
+```
 BAFO/
 │
 ├── notebooks
-│ └── motor_model.ipynb
+│   └── motor_model.ipynb
 │
 ├── figures
-│ ├── correlation_matrix.png
-│ ├── feature_space.png
-│ ├── monitoring_dashboard.png
-│ ├── detection_delay.png
-│ └── fault_detection_map.png
+│   ├── correlation_matrix.png
+│   ├── feature_space.png
+│   ├── monitoring_dashboard.png
+│   ├── detection_delay.png
+│   └── fault_detection_map.png
 │
 ├── src
 │
 ├── README.md
 └── requirements.txt
+```
 
 ---
 
