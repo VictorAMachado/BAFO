@@ -18,18 +18,22 @@ Industrial condition monitoring systems must detect abnormal operating condition
 
 Traditional monitoring approaches typically rely on:
 
-- amplitude thresholds
-- static statistical models
+- amplitude thresholds  
+- static statistical models  
 
-However, these methods may struggle to detect **regime changes and structural faults** in complex systems.
+However, these methods often struggle to detect **regime changes and structural faults** in complex systems.
 
-The **BAFO framework** addresses this challenge by integrating:
+The **Bayesian Adaptive Fault Observer (BAFO)** addresses this challenge by integrating multivariate statistical monitoring with a probabilistic state observer.
 
-- multivariate statistical evidence
-- Bayesian probabilistic updates
-- temporal state observation
+Key features of the proposed framework include:
 
-resulting in a monitoring method capable of detecting **regime divergence and fault evolution**.
+- Probabilistic fault detection using a **Bayesian state observer**
+- Multivariate monitoring based on **Mahalanobis distance**
+- Benchmark comparison with **RMS threshold monitoring and PCA–MSPC**
+- Simulation of multiple industrial fault regimes
+- Visualization tools for **regime transitions and detection dynamics**
+
+Together, these components allow the monitoring framework to detect **regime divergence and fault evolution** while maintaining stability in the presence of transient disturbances.
 
 ---
 
@@ -56,7 +60,7 @@ The extracted features form a multivariate representation of machine behavior ac
 
 ![Feature Space by Scenario](figures/feature_space.png)
 
-Different fault conditions produce distinct patterns in the feature space.  
+Different simulated fault conditions produce distinct patterns in the feature space.  
 This separation allows statistical monitoring methods to identify regime transitions and abnormal operating conditions.
 
 ---
@@ -67,7 +71,7 @@ The monitoring pipeline follows four stages:
 
 **Monitoring Pipeline**
 
-Simulation → Feature Extraction → Fault Detection → Evaluation
+Simulation → Feature Extraction → Multivariate Monitoring → Bayesian Observer → Evaluation
 
 ### Multivariate Regime Signal
 
@@ -77,21 +81,45 @@ This score measures the deviation of the current feature vector from the referen
 
 ---
 
-# Bayesian Adaptive Fault Observer (BAFO)
+## Bayesian Adaptive Fault Observer (BAFO)
 
-The **BAFO** framework operates as a probabilistic state observer that integrates multivariate evidence over time.
+The **Bayesian Adaptive Fault Observer (BAFO)** operates as a probabilistic monitoring framework that integrates statistical evidence over time through a state-observer structure.
 
-Conceptually:
+Conceptually, the algorithm follows four stages:
 
 ```
-Multivariate Evidence
-        ↓
-    Bayesian Update
-        ↓
-Health State Observer
++---------------------+
+| Signal Conditioning |
+|  smoothing + slope  |
++---------------------+
+          ↓
++-----------------------+
+| Multivariate Evidence |
+|  normalized deviation |
++-----------------------+
+          ↓
++--------------------+
+|   Bayesian Update  |
+|    probabilistic   |
+|   inference step   |
++--------------------+
+          ↓
++--------------------+
+|    Health State    |
+|     Observer       |
+| degradation state  |
++--------------------+
 ```
 
-This structure allows the observer to react to regime changes while maintaining robustness to impulsive disturbances and transient noise.
+First, the monitoring signal is conditioned through smoothing and derivative estimation to stabilize impulsive disturbances while preserving regime transitions.
+
+The conditioned signal is then converted into **multivariate evidence**, representing the deviation from the healthy operating baseline.
+
+This evidence is integrated through a **Bayesian update step**, which estimates the probability of abnormal operation.
+
+Finally, a **health state observer** smooths the posterior probability to track the long-term evolution of system degradation.
+
+This structure allows the observer to react to regime changes while maintaining robustness to transient disturbances and noise in the monitoring signal.
 
 ---
 
@@ -128,6 +156,12 @@ These methods serve as baseline detectors for evaluating BAFO performance.
 ---
 
 # Detection Performance
+
+### Key Results
+
+- BAFO detected all simulated fault regimes
+- Classical RMS thresholds failed to detect several structural faults
+- BAFO provided smoother temporal behavior compared to PCA-based MSPC
 
 Detection delay was measured for each simulated regime.
 
@@ -183,6 +217,8 @@ BAFO/
 ├── README.md
 └── requirements.txt
 ```
+Main notebook:  
+[Motor Model Notebook](notebooks/motor_model.ipynb)
 
 ---
 
