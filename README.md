@@ -218,7 +218,7 @@ BAFO/
 └── requirements.txt
 ```
 Main notebook:  
-[Motor Model Notebook](notebooks/motor_model.ipynb)
+[Motor Model Notebook](notebook/motor_model.ipynb)
 
 ---
 
